@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="mn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Level Test</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--tx:#1b2333;--mut:#667;--pr:#4f46e5;--ok:#16a34a;--no:#dc2626;--bd:#dde2ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1420;--card:#1a2133;--tx:#eef1f8;--mut:#9aa4bd;--bd:#2b3550}}
+:root[data-theme=dark]{--bg:#0f1420;--card:#1a2133;--tx:#eef1f8;--mut:#9aa4bd;--bd:#2b3550}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{font-size:22px;margin:0}button{font:inherit;cursor:pointer}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:14px 18px;font-weight:600;min-height:48px}
+.btn.s{background:var(--card);color:var(--tx);border:1px solid var(--bd)}.btn:disabled{opacity:.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lv{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px 12px;text-align:left;color:var(--tx);transition:.2s}
+.lv:hover{transform:translateY(-3px);border-color:var(--pr)}.lv b{font-size:26px;color:var(--pr);display:block}.lv small{color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin:12px 0}
+.bar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--pr);transition:width .3s}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:12px;padding:14px;margin:8px 0;transition:.15s}
+.opt.sel{border-color:var(--pr)}.opt.ok{border-color:var(--ok);background:rgba(22,163,74,.12)}.opt.no{border-color:var(--no);background:rgba(220,38,38,.12)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1}
+.ex{border-left:4px solid var(--bd);padding:6px 10px;margin:8px 0;font-size:15px}.ex.ok{border-color:var(--ok)}.ex.no{border-color:var(--no)}
+.ring{width:150px;height:150px;border-radius:50%;margin:12px auto;display:grid;place-items:center;font-size:30px;font-weight:700}
+.ring span{background:var(--card);width:116px;height:116px;border-radius:50%;display:grid;place-items:center}
+.fade{animation:f .3s}@keyframes f{from{opacity:0;transform:translateY(8px)}}
+</style></head><body><main>
+<header><h1>📘 English Level Test</h1><button class="btn s" id="th" aria-label="theme">🌓</button></header>
+<div id="app"></div></main>
+<script>
+const L=[["A1","Анхан шат","Өдөр тутмын энгийн англи хэл"],["A2","Бага шат","Энгийн яриа, өдөр тутмын сэдэв"],["B1","Дунд шат","Ажил, аялал, санаа бодлоо илэрхийлэх"],["B2","Дунд дээд шат","Төвөгтэй сэдвээр чөлөөтэй харилцах"],["C1","Ахисан шат","Эрдэм шинжилгээ, мэргэжлийн англи хэл"],["C2","Эзэмшсэн шат","Эх хэлтэй ойролцоо түвшин"]];
+// [question, [A,B,C,D], correctIndex, [explanation for A,B,C,D]]
+const Q={
+A1:[["She ___ to school every day.",["go","goes","going","gone"],1,["\"She\" нь 3-р биеийн ганц тоо тул \"go\" биш \"goes\" хэрэглэнэ.","\"She\" + Present Simple үед үйл үгэнд -s залгана. Тиймээс зөв.","\"going\" нь -ing хэлбэр бөгөөд энэ бүтцэд тохирохгүй.","\"gone\" нь past participle тул Present Simple-д хэрэглэхгүй."]],
+["I ___ a student.",["am","is","are","be"],0,["\"I\"-тэй хамт \"am\" хэрэглэнэ. Тиймээс зөв.","\"is\" нь he/she/it-тэй хэрэглэгдэнэ, \"I\"-тэй биш.","\"are\" нь you/we/they-тэй хэрэглэгдэнэ.","\"be\" нь үндсэн хэлбэр бөгөөд \"I\"-ийн дараа шууд орохгүй."]]],
+A2:[["This book is ___ than that one.",["interesting","more interesting","most interesting","the more interesting"],1,["Харьцуулах үед \"than\"-ийн өмнө энгийн тэмдэг нэр хангалтгүй.","Урт тэмдэг нэр + than → \"more + adjective\". Тиймээс зөв.","\"most\" нь дээд зэрэг бөгөөд \"than\"-тай хэрэглэхгүй.","\"the more interesting\" гэдэг нь \"than\"-тай ердийн харьцуулалтад тохирохгүй."]],
+["I ___ lived here since 2015.",["have","has","am","was"],0,["\"I\"-тэй Present Perfect-д \"have\" хэрэглэнэ, \"since\" нь үүнийг заана. Зөв.","\"has\" нь he/she/it-тэй хэрэглэгдэнэ.","\"am lived\" гэсэн бүтэц байхгүй.","\"was lived\" буруу; \"since\" нь Present Perfect шаарддаг."]]],
+B1:[["If it rains tomorrow, we ___ at home.",["will stay","would stay","stayed","stay"],0,["Type 1 conditional: If + Present, will + V. Зөв.","\"would stay\" нь Type 2 (боломжгүй/төсөөлөл) тул тохирохгүй.","Өнгөрсөн үе нь ирээдүйн нөхцөлд тохирохгүй.","Үндсэн хэлбэр нь ирээдүйн үр дүнг илэрхийлэхгүй, \"will\" хэрэгтэй."]],
+["The window ___ by the boy yesterday.",["broke","was broken","has broken","breaks"],1,["\"broke\" нь идэвхтэй хэлбэр; энд үйлдэгч \"by the boy\" тул passive хэрэгтэй.","Past Simple Passive: was + V3. Зөв.","\"has broken\" нь идэвхтэй, \"yesterday\"-тэй хэрэглэхгүй.","\"breaks\" нь одоо цаг, идэвхтэй хэлбэр тул буруу."]]],
+B2:[["If I had known, I ___ you.",["would tell","would have told","will tell","had told"],1,["\"would tell\" нь Type 2; өнгөрсөн үйл явдалд тохирохгүй.","Type 3 conditional: If + had V3, would have V3. Зөв.","\"will tell\" нь ирээдүйг заана.","\"had told\" нь үр дүнгийн хэсэгт ордоггүй."]],
+["She must ___ the keys at home; she can't find them.",["leave","have left","left","be leaving"],1,["\"must leave\" нь одоогийн/ирээдүйн үүрэг, дүгнэлт биш.","Must + have + V3 → өнгөрсөн үйлийн талаарх хүчтэй таамаг. Зөв.","\"must left\" гэж хэлбэр байхгүй.","\"be leaving\" нь үргэлжилж буй үйлийг заана, энд тохирохгүй."]]],
+C1:[["Hardly ___ the house when it began to rain.",["had we left","we had left","we left","did we left"],0,["\"Hardly\" өгүүлбэрийн эхэнд ирвэл inversion: had + subject + V3. Зөв.","Inversion хийгээгүй тул дараалал буруу.","Past Simple нь \"hardly ... when\" бүтцэд тохирохгүй.","\"did\"-ийн дараа үйл үг үндсэн хэлбэрээр орох ёстой (\"leave\"), мөн энд Past Perfect хэрэгтэй."]],
+["The committee ___ the proposal due to lack of funding.",["turned down","turned up","turned in","turned over"],0,["\"turn down\" = татгалзах. Зөв.","\"turn up\" = гарч ирэх, дуу өндөрсгөх.","\"turn in\" = гардуулах, унтах.","\"turn over\" = эргүүлэх, шилжүүлэх."]]],
+C2:[["Her speech was ___; no one could fault it.",["impeccable","impenetrable","improbable","impassive"],0,["\"impeccable\" = өө сэвгүй. Зөв.","\"impenetrable\" = нэвтэршгүй, ойлгомжгүй.","\"improbable\" = магадлал багатай.","\"impassive\" = сэтгэл хөдлөлгүй."]],
+["\"He's been burning the candle at both ends.\" Энэ нь:",["wasting money","exhausting himself by doing too much","being careless with fire","saving energy"],1,["Мөнгө үрэхтэй холбоогүй хэллэг.","Хэт их ажиллаж/амралтгүй явж ядрах гэсэн хэлц үг. Зөв.","Шууд утга биш, хэлц үг.","Эсрэг утгатай."]]]};
+const $=s=>document.querySelector(s),app=$("#app");let S={};
+$("#th").onclick=()=>{const r=document.documentElement;r.dataset.theme=(r.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"))=="dark"?"light":"dark"};
+const E=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function home(){app.innerHTML=`<div class="fade"><h2>Түвшнээ сонгоно уу</h2><div class="grid">${L.map(l=>`<button class="lv" onclick="start('${l[0]}')"><b>${l[0]}</b>${l[1]}<br><small>${l[2]}</small></button>`).join("")}</div></div>`}
+function start(l){S={l,q:Q[l],i:0,a:[],d:[]};quiz()}
+const ex=(q,k,u)=>q[1].map((o,j)=>`<div class="ex ${j==q[2]?'ok':'no'}"><b>${"ABCD"[j]}. ${E(o)} ${j==q[2]?'✅':'❌'}</b>${j==u?' <small>(таны хариулт)</small>':''}<br>${j==q[2]?'Яагаад зөв вэ:':'Яагаад буруу вэ:'} ${E(q[3][j])}</div>`).join("");
+function quiz(){const{q,i,a,d,l}=S,c=q[i],n=q.length,sub=d[i];
+app.innerHTML=`<div class="fade"><div class="row" style="justify-content:space-between"><b>${l}</b><span>Асуулт ${i+1} / ${n}</span></div><div class="bar"><i style="width:${(d.filter(x=>x).length/n)*100}%"></i></div>
+<div class="card"><h3>${E(c[0])}</h3>${c[1].map((o,j)=>`<button class="opt ${a[i]==j?'sel':''} ${sub?(j==c[2]?'ok':a[i]==j?'no':''):''}" ${sub?'disabled':''} onclick="pick(${j})"><b>${"ABCD"[j]}.</b> ${E(o)}</button>`).join("")}</div>
+${sub?`<div class="card"><h3>${a[i]==c[2]?'✅ Зөв!':'❌ Буруу'}</h3><p>Зөв хариулт: <b>${"ABCD"[c[2]]}. ${E(c[1][c[2]])}</b></p>${ex(c,0,a[i])}</div>`:''}
+<div class="row"><button class="btn s" onclick="go(-1)" ${i?'':'disabled'}>Өмнөх асуулт</button><button class="btn" onclick="submit()" ${sub||a[i]==null?'disabled':''}>Хариу шалгах</button>
+<button class="btn s" onclick="go(1)" ${i<n-1?'':'disabled'}>Дараагийн асуулт</button></div>
+${d.filter(x=>x).length==n?'<p><button class="btn" style="width:100%" onclick="result()">Үр дүн харах</button></p>':''}</div>`}
+function pick(j){if(!S.d[S.i]){S.a[S.i]=j;quiz()}}
+function submit(){S.d[S.i]=true;quiz()}
+function go(x){S.i+=x;quiz()}
+function result(){const{q,a,l}=S,n=q.length,ok=q.filter((c,i)=>a[i]==c[2]).length,p=Math.round(ok/n*100);
+const m=p>=90?"Гайхалтай! Та энэ түвшнийг маш сайн эзэмшсэн байна.":p>=70?`Сайн байна! Та ${l} түвшний даалгаврыг ихэнхдээ зөв гүйцэтгэлээ.`:p>=50?"Дунд зэрэг. Алдсан асуултуудаа давтаарай.":"Та энэ түвшинд илүү дадлага хийх хэрэгтэй. Доорх тайлбаруудыг уншаарай.";
+const w=q.map((c,i)=>a[i]==c[2]?'':`<div class="card"><b>${i+1}. ${E(c[0])}</b><p>Таны хариулт: <b>${"ABCD"[a[i]]}. ${E(c[1][a[i]])}</b> ❌<br>Зөв хариулт: <b>${"ABCD"[c[2]]}. ${E(c[1][c[2]])}</b> ✅</p>${ex(c,0,a[i])}</div>`).join("");
+app.innerHTML=`<div class="fade"><h2>Таны үр дүн</h2><div class="card" style="text-align:center"><div class="ring" style="background:conic-gradient(var(--pr) ${p*3.6}deg,var(--bd) 0)"><span>${p}%</span></div>
+<p>Level: <b>${l}</b><br>Зөв хариулт: <b>${ok} / ${n}</b><br>Буруу хариулт: <b>${n-ok} / ${n}</b><br>Оноо: <b>${p}%</b></p><p>${m}</p></div>
+<div class="row"><button class="btn" onclick="start('${l}')">Дахин өгөх</button><button class="btn s" onclick="home()">Өөр түвшин сонгох</button></div>
+<h2>Алдсан асуултууд</h2>${w||'<div class="card">🎉 Алдсан асуулт байхгүй!</div>'}</div>`}
+home();
+</script></body></html>
